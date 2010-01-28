@@ -1,0 +1,17 @@
+=QGIS watermark plugin
+
+The watermark plugin for QGIS[http://www.qgis.org/] demonstrates
+the basic usage of the new QgsPluginLayer API.
+
+
+==Installation
+
+=== Plugin repository
+ http://build.sourcepole.ch/qgis/plugins.xml
+
+
+==License
+
+QGIS watermark plugin is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+
+<em>Copyright (c) 2009 Matthias Walker & Pirmin Kalberer, Sourcepole AG</em>
