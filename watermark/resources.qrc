@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="/plugins/watermark" >
+    <file>icon.png</file>
+  </qresource>
+</RCC>
