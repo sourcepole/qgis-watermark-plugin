@@ -38,10 +38,25 @@ class WatermarkPluginLayer(QgsPluginLayer):
   def draw(self, rendererContext):
     if self.image != None:
       painter = rendererContext.painter()
-      painter.save()
+      extent = rendererContext.extent()
+      mapToPixel = rendererContext.mapToPixel()
+      rasterScaleFactor = rendererContext.rasterScaleFactor()
+      invRasterScaleFactor = 1.0/rasterScaleFactor
 
+      # get dimensions of painter area (so it is also correctly scaled in print composer)
+      # Note: watermark is not correctly scaled in print preview
+      topleft = mapToPixel.transform(extent.xMinimum(), extent.yMaximum())
+      bottomright = mapToPixel.transform(extent.xMaximum(), extent.yMinimum())
+      width = (bottomright.x() - topleft.x()) * rasterScaleFactor
+      height = (bottomright.y() - topleft.y()) * rasterScaleFactor
+
+      # setup painter
+      painter.save()
+      painter.scale(invRasterScaleFactor, invRasterScaleFactor)
+
+      # render watermark image in lower left corner
       painter.setOpacity(0.5)
-      y = painter.viewport().height() - 32 - self.image.height()
+      y = height - 32 - self.image.height()
       painter.drawImage(32, y, self.image)
 
       painter.restore()
