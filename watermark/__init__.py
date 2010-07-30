@@ -32,7 +32,7 @@ def qgisMinimumVersion():
 def authorName():
   return "Sourcepole"
 def homepage():
-  return "http://github.com/pka/qgis-watermark-plugin"
+  return "http://github.com/sourcepole/qgis-watermark-plugin"
 def classFactory(iface):
   from watermark_plugin import WatermarkPlugin
   return WatermarkPlugin(iface)
