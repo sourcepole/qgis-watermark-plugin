@@ -94,7 +94,7 @@ package: compile
 		git archive --prefix=$(PLUGINNAME)/ -o $(PLUGINNAME).zip $(VERSION)
 		echo "Created package: $(PLUGINNAME).zip"
 
-upload: zip
+upload: #zip
 	$(PLUGIN_UPLOAD) $(PLUGINNAME).zip
 
 # transup
@@ -117,3 +117,7 @@ clean:
 # build documentation with sphinx
 doc:
 	cd help; make html
+
+# Upload to plugins.qgis.org:
+# make package VERSION=master
+# make upload
