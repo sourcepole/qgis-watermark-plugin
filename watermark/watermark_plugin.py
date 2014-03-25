@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
-Watermark Plugin
-A QGIS plugin
-Render watermark showing basic QgsPluginLayer usage
-
-                             -------------------
-begin                : 2010-01-28
-copyright            : (C) 2010 by Sourcepole
-email                : info at sourcepole dot ch
+ WatermarkPlugin
+                                 A QGIS plugin
+ Render watermark using QgsPluginLayer
+                              -------------------
+        begin                : 2014-03-24
+        copyright            : (C) 2014 by Sourcepole
+        email                : info@sourcepole.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -20,45 +19,59 @@ email                : info at sourcepole dot ch
  *                                                                         *
  ***************************************************************************/
 """
+# Import the PyQt and QGIS libraries
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
-
-import resources
-
+# Initialize Qt resources from file resources.py
+import resources_rc
 from watermark_plugin_layer import *
 from watermark_plugin_layer_type import *
+import os.path
+
 
 class WatermarkPlugin:
 
-  def __init__(self, iface):
-    # Save reference to the QGIS interface
-    self.iface = iface
+    def __init__(self, iface):
+        # Save reference to the QGIS interface
+        self.iface = iface
+        # initialize plugin directory
+        self.plugin_dir = os.path.dirname(__file__)
+        # initialize locale
+        locale = QSettings().value("locale/userLocale")[0:2]
+        localePath = os.path.join(self.plugin_dir, 'i18n', 'watermark_{}.qm'.format(locale))
 
-  def initGui(self):
-    # Create action that will start plugin configuration
-    self.action = QAction(QIcon(":/plugins/watermark/icon.png"), "Add watermark", self.iface.mainWindow())
-    # connect the action to the run method
-    QObject.connect(self.action, SIGNAL("triggered()"), self.run)
+        if os.path.exists(localePath):
+            self.translator = QTranslator()
+            self.translator.load(localePath)
 
-    # Add toolbar button and menu item
-    self.iface.addToolBarIcon(self.action)
-    self.iface.addPluginToMenu("Watermark", self.action)
+            if qVersion() > '4.3.3':
+                QCoreApplication.installTranslator(self.translator)
 
-    # Register plugin layer type
-    QgsPluginLayerRegistry.instance().addPluginLayerType(WatermarkPluginLayerType())
+    def initGui(self):
+        # Create action that will start plugin configuration
+        self.action = QAction(QIcon(":/plugins/watermark/icon.png"), "Add watermark", self.iface.mainWindow())
+        # connect the action to the run method
+        self.action.triggered.connect(self.run)
 
-  def unload(self):
-    # Remove the plugin menu item and icon
-    self.iface.removePluginMenu("Watermark",self.action)
-    self.iface.removeToolBarIcon(self.action)
+        # Add toolbar button and menu item
+        self.iface.addToolBarIcon(self.action)
+        self.iface.addPluginToMenu("Watermark", self.action)
 
-    # Unregister plugin layer type
-    QgsPluginLayerRegistry.instance().removePluginLayerType(WatermarkPluginLayer.LAYER_TYPE)
+        # Register plugin layer type
+        QgsPluginLayerRegistry.instance().addPluginLayerType(WatermarkPluginLayerType())
 
-  def run(self):
-    # Create and add plugin layer
-    layer = WatermarkPluginLayer()
-    layer.showImageDialog()
-    if layer.isValid():
-      QgsMapLayerRegistry.instance().addMapLayer(layer)
+    def unload(self):
+        # Remove the plugin menu item and icon
+        self.iface.removePluginMenu("Watermark", self.action)
+        self.iface.removeToolBarIcon(self.action)
+
+        # Unregister plugin layer type
+        QgsPluginLayerRegistry.instance().removePluginLayerType(WatermarkPluginLayer.LAYER_TYPE)
+
+    def run(self):
+        # Create and add plugin layer
+        layer = WatermarkPluginLayer()
+        layer.showImageDialog()
+        if layer.isValid():
+            QgsMapLayerRegistry.instance().addMapLayer(layer)

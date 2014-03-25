@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
-Watermark Plugin
-A QGIS plugin
-Render watermark showing basic QgsPluginLayer usage
-
+ WatermarkPlugin
+                                 A QGIS plugin
+ Render watermark using QgsPluginLayer
                              -------------------
-begin                : 2010-01-28
-copyright            : (C) 2010 by Sourcepole
-email                : info at sourcepole dot ch
-***************************************************************************/
+        begin                : 2014-03-24
+        copyright            : (C) 2014 by Sourcepole
+        email                : info@sourcepole.ch
+ ***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
@@ -21,18 +20,8 @@ email                : info at sourcepole dot ch
  ***************************************************************************/
  This script initializes the plugin, making it known to QGIS.
 """
-def name():
-  return "Watermark Plugin"
-def description():
-  return "Render watermark using QgsPluginLayer"
-def version():
-  return "Version 1.0"
-def qgisMinimumVersion():
-  return "1.5"
-def authorName():
-  return "Sourcepole"
-def homepage():
-  return "http://github.com/sourcepole/qgis-watermark-plugin"
+
 def classFactory(iface):
-  from watermark_plugin import WatermarkPlugin
-  return WatermarkPlugin(iface)
+    # load WatermarkPlugin class from file WatermarkPlugin
+    from watermark_plugin import WatermarkPlugin
+    return WatermarkPlugin(iface)

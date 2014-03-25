@@ -50,6 +50,7 @@ class WatermarkPluginLayer(QgsPluginLayer):
       width = (bottomright.x() - topleft.x()) * rasterScaleFactor
       height = (bottomright.y() - topleft.y()) * rasterScaleFactor
 
+
       # setup painter
       painter.save()
       painter.scale(invRasterScaleFactor, invRasterScaleFactor)
