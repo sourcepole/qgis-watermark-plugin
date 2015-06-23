@@ -1,7 +1,7 @@
 =QGIS watermark plugin
 
 The watermark plugin for QGIS[http://www.qgis.org/] demonstrates
-the basic usage of the new QgsPluginLayer API.
+the basic usage of the QgsPluginLayer API.
 
 
 ==License

@@ -1,10 +1,14 @@
 [general]
 name=Watermark Plugin
 qgisMinimumVersion=2.0
+qgisMaximumVersion=2.3
 description=Render watermark using QgsPluginLayer
-version=2.0
+version=2.0.1
 author=Sourcepole
 email=info@sourcepole.ch
+
+about=The watermark plugin demonstrates
+      the basic usage of the QgsPluginLayer API.
 
 # end of mandatory metadata
 
